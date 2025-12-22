@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Purchase Request</title>
+  <link rel="stylesheet" href="css.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="themes.css">
+  <link rel="icon" href="data:,">
+</head>
+
+<body class="theme-request">
+  <!-- BARIS-1 : judul + (Dashboard + Tambah) -->
+  <div class="head-bar">
+    <h2>Purchase Request List</h2>
+    <div class="head-actions">
+      <a href="dashboard.html" class="btn-secondary btn-link">⬅ Dashboard</a>
+      <button id="btnAdd" class="btn-primary">➕ Tambah Permintaan</button>
+    </div>
+  </div>
+
+  <!-- BARIS-2 : filter + search -->
+  <div class="filter-bar">
+    <div>
+      Tampilkan
+      <select id="pageSize">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="25" selected>25</option>
+        <option value="50">50</option>
+      </select>
+      data
+    </div>
+    <div>
+      Cari:
+      <input type="text" id="search" placeholder="Cari data…">
+    </div>
+  </div>
+
+  <!-- MODAL (ADD + EDIT) -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Form Permintaan Barang</h3>
+        <button id="btnClose" class="modal-close">×</button>
+      </div>
+      <form id="prForm" class="pr-form" autocomplete="off">
+        <input type="hidden" name="ID" id="formID">
+        <div class="form-grid">
+          <div><label>Department</label><input name="Department" required></div>
+          <div><label>Office</label><input name="Office" required></div>
+          <div><label>Items</label><input name="Items" required></div>
+          <div><label>Part Of</label><input name="PartOf"></div>
+          <div class="full"><label>Description</label><textarea name="Description" rows="3"></textarea></div>
+          <div><label>Qty</label><input name="Qty" type="number" min="1" required></div>
+          <div><label>Unit</label><input name="Unit" required></div>
+          <div><label>Price</label><input name="Price" type="number" min="0" required></div>
+          <div><label>Last Buying Date</label><input name="LastBuyingDate" type="date"></div>
+          <div><label>Order Date</label><input name="OrderDate" type="date" required></div>
+          <div><label>Priority</label>
+            <select name="Priority">
+              <option>Low</option>
+              <option selected>Medium</option>
+              <option>High</option>
+            </select>
+          </div>
+          <div><label>Order By</label><input name="OrderBy"></div>
+          <div><label>Requester</label><input name="Requester" required></div>
+        </div>
+        <div class="form-actions">
+          <button type="button" id="btnCancel" class="btn-secondary">Batal</button>
+          <button type="submit" class="btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-wrapper">
+    <table>
+      <thead></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="table-bottom">
+    <div id="infoText"></div>
+    <div id="pagination"></div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+  <script src="auth.js"></script>
+</body>
+
+</html>

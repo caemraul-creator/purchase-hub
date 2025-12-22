@@ -1,0 +1,199 @@
+/* ============================================================ 
+   PREMIUM CORPORATE THEMES
+   Matching the new "Workplace Center" Dashboard aesthetic
+============================================================ */
+
+body {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 100vh;
+  background-attachment: fixed !important;
+}
+
+/* Base Surface Styles (Glassmorphism) */
+.form-wrapper,
+.table-wrapper,
+.modal-content,
+.dashboard-card {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04) !important;
+  border-radius: 20px !important;
+}
+
+/* Shared Header Style */
+.head-bar h2 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 2rem !important;
+  letter-spacing: -0.5px;
+}
+
+/* ===== THEME: REQUEST (index.html) - Sapphire Corporate ===== */
+.theme-request {
+  --primary: #4338ca;
+  --primary-600: #3730a3;
+  --bg: #f8fafc;
+  background-image:
+    radial-gradient(at 0% 0%, rgba(67, 56, 202, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.08) 0px, transparent 50%) !important;
+}
+
+.theme-request th {
+  background: #eef2ff;
+  color: #3730a3;
+}
+
+.theme-request .btn-primary {
+  background: #4338ca;
+}
+
+.theme-request .btn-primary:hover {
+  background: #3730a3;
+}
+
+/* ===== THEME: APPROVAL (approval.html) - Emerald Executive ===== */
+.theme-approval {
+  --primary: #059669;
+  --primary-600: #047857;
+  --bg: #f8fafc;
+  background-image:
+    radial-gradient(at 0% 0%, rgba(5, 150, 105, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.08) 0px, transparent 50%) !important;
+}
+
+.theme-approval th {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.theme-approval .btn-primary {
+  background: #059669;
+}
+
+.theme-approval .btn-primary:hover {
+  background: #047857;
+}
+
+/* ===== THEME: DONE (done.html) - Royal Purple ===== */
+.theme-done {
+  --primary: #7c3aed;
+  --primary-600: #6d28d9;
+  --bg: #f8fafc;
+  background-image:
+    radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.08) 0px, transparent 50%) !important;
+}
+
+.theme-done th {
+  background: #f5f3ff;
+  color: #5b21b6;
+}
+
+.theme-done .btn-primary {
+  background: #7c3aed;
+}
+
+.theme-done .btn-primary:hover {
+  background: #6d28d9;
+}
+
+/* ===== THEME: REKAP (rekap.html) - Amber Analytics ===== */
+.theme-rekap {
+  --primary: #d97706;
+  --primary-600: #b45309;
+  --bg: #f8fafc;
+  background-image:
+    radial-gradient(at 0% 0%, rgba(217, 119, 6, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(245, 158, 11, 0.08) 0px, transparent 50%) !important;
+}
+
+.theme-rekap th {
+  background: #fffbeb;
+  color: #92400e;
+}
+
+.theme-rekap .btn-primary {
+  background: #d97706;
+}
+
+.theme-rekap .btn-primary:hover {
+  background: #b45309;
+}
+
+/* ===== THEME: REJECTED (rejected.html) - Crimson Corporate ===== */
+.theme-rejected {
+  --primary: #dc2626;
+  --primary-600: #b91c1c;
+  --bg: #f8fafc;
+  background-image:
+    radial-gradient(at 0% 0%, rgba(220, 38, 38, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(239, 68, 68, 0.08) 0px, transparent 50%) !important;
+}
+
+.theme-rejected th {
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.theme-rejected .btn-primary {
+  background: #dc2626;
+}
+
+.theme-rejected .btn-primary:hover {
+  background: #b91c1c;
+}
+
+/* Refined Table Header */
+th {
+  padding: 12px 15px !important;
+  text-transform: uppercase;
+  font-size: 10px !important;
+  letter-spacing: 1.5px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Modern Status Badges */
+.status {
+  padding: 3px 10px !important;
+  /* Significantly reduced from 6px 14px */
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  font-size: 10px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.3px !important;
+}
+
+/* Button Refinement */
+button,
+.btn-link {
+  font-weight: 600 !important;
+  border-radius: 12px !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Ensure table buttons stay compact */
+td button {
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+  font-size: 10px !important;
+}
+
+.btn-primary {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Toast Modernization */
+.toast {
+  background: #1e293b !important;
+  border-radius: 16px !important;
+  padding: 15px 25px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2) !important;
+}

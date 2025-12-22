@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Approval Purchase Request</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css.css">
+  <link rel="stylesheet" href="themes.css">
+</head>
+
+<body class="theme-approval">
+
+  <!-- BARIS-1 : judul + Dashboard -->
+  <div class="head-bar">
+    <h2>Approval Purchase Request</h2>
+    <a href="dashboard.html" class="btn-secondary btn-link">
+      ⬅ Dashboard</a>
+  </div>
+
+  <!-- BARIS-2 : filter + search -->
+  <div class="filter-bar">
+    <div>
+      Tampilkan
+      <select id="pageSize">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="25" selected>25</option>
+        <option value="50">50</option>
+      </select>
+      data
+    </div>
+    <div>
+      Cari:
+      <input type="text" id="search" placeholder="Cari data…">
+    </div>
+  </div>
+
+  <!-- TABEL -->
+  <div class="table-wrapper">
+    <table>
+      <thead></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- BOTTOM -->
+  <div class="table-bottom">
+    <div id="infoText"></div>
+    <div id="pagination"></div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="config.js"></script>
+  <script src="approval.js"></script>
+  <script src="auth.js"></script>
+</body>
+
+</html>

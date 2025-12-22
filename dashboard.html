@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard - Purchase Request System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:,">
+  <script src="config.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #3730a3;
+      --secondary: #ec4899;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --info: #3b82f6;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --bg-body: #f8fafc;
+      --glass: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', 'Segoe UI', sans-serif;
+      background-color: var(--bg-body);
+      background-image:
+        radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.03) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.03) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.03) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(16, 185, 129, 0.03) 0px, transparent 50%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      color: var(--text-main);
+      overflow-x: hidden;
+    }
+
+    /* Abstract Background shapes */
+    .bg-shape {
+      position: fixed;
+      z-index: -1;
+      filter: blur(40px);
+      border-radius: 50%;
+      opacity: 0.15;
+      animation: move 25s infinite alternate ease-in-out;
+    }
+
+    .shape-1 {
+      width: 120px;
+      height: 120px;
+      background: var(--primary);
+      top: -40px;
+      left: -40px;
+    }
+
+    .shape-2 {
+      width: 100px;
+      height: 100px;
+      background: var(--secondary);
+      bottom: -30px;
+      right: -30px;
+      animation-delay: -7s;
+    }
+
+    @keyframes move {
+      from {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+      }
+
+      to {
+        transform: translate(100px, 100px) scale(1.1) rotate(30deg);
+      }
+    }
+
+    .container {
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    /* Header Section */
+    .header {
+      margin-bottom: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .greeting-box {
+      font-size: 1.1rem;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .greeting-emoji {
+      font-size: 1.5rem;
+      animation: wave 2s infinite;
+      display: inline-block;
+      transform-origin: 70% 70%;
+    }
+
+    @keyframes wave {
+      0% {
+        transform: rotate(0.0deg)
+      }
+
+      10% {
+        transform: rotate(14.0deg)
+      }
+
+      20% {
+        transform: rotate(-8.0deg)
+      }
+
+      30% {
+        transform: rotate(14.0deg)
+      }
+
+      40% {
+        transform: rotate(-4.0deg)
+      }
+
+      50% {
+        transform: rotate(10.0deg)
+      }
+
+      60% {
+        transform: rotate(0.0deg)
+      }
+
+      100% {
+        transform: rotate(0.0deg)
+      }
+    }
+
+    .header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      background: linear-gradient(to right, #1e293b, #4f46e5);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 10px;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 30px;
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
+    }
+
+    .stat-card {
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 10px;
+      width: 125px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      aspect-ratio: 1 / 1;
+      text-align: center;
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+      border-color: var(--primary);
+    }
+
+    .stat-icon-wrapper {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      margin-bottom: 8px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+    }
+
+    .stat-card.pending .stat-icon-wrapper {
+      background: #fffcf0;
+      color: #d97706;
+    }
+
+    .stat-card.approved .stat-icon-wrapper {
+      background: #f0fdf4;
+      color: #059669;
+    }
+
+    .stat-card.done .stat-icon-wrapper {
+      background: #f0f9ff;
+      color: #0284c7;
+    }
+
+    .stat-card.rejected .stat-icon-wrapper {
+      background: #fef2f2;
+      color: #ef4444;
+    }
+
+    .stat-value {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 5px;
+    }
+
+    .stat-name {
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Menu Grid */
+    .section-head {
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .section-head h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .section-icon {
+      font-size: 1.5rem;
+    }
+
+    .menu-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s backwards;
+    }
+
+    .menu-item {
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 15px;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid #f1f5f9;
+      position: relative;
+      width: 200px;
+      /* Fixed width to make them uniform and aligned */
+    }
+
+    .menu-item:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.3);
+    }
+
+    .menu-item-icon {
+      width: 60px;
+      height: 60px;
+      min-width: 60px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      background: #f8fafc;
+      transition: all 0.4s ease;
+    }
+
+    .menu-item:hover .menu-item-icon {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(0.9);
+    }
+
+    .menu-item-info h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: var(--text-main);
+      transition: color 0.3s;
+    }
+
+    .menu-item-info p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      transition: color 0.3s;
+    }
+
+    .menu-item:hover h3,
+    .menu-item:hover p {
+      color: white;
+    }
+
+    .menu-item:hover p {
+      opacity: 0.9;
+    }
+
+    .menu-item-arrow {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      font-size: 24px;
+      color: #e2e8f0;
+      transition: all 0.4s;
+    }
+
+    .menu-item:hover .menu-item-arrow {
+      color: white;
+      transform: translateX(8px);
+    }
+
+    /* Fixed User Info UI - Redefined */
+    .user-floater {
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 12px 20px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border: 1px solid var(--glass-border);
+      animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .user-avatar {
+      width: 45px;
+      height: 45px;
+      background: var(--primary);
+      color: white;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .user-meta {
+      text-align: left;
+    }
+
+    .user-id {
+      font-weight: 700;
+      color: var(--text-main);
+      font-size: 1rem;
+    }
+
+    .user-tag {
+      font-size: 0.75rem;
+      color: var(--primary);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .nav-logout {
+      background: #fef2f2;
+      color: #dc2626;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+      transition: all 0.3s;
+    }
+
+    .nav-logout:hover {
+      background: #dc2626;
+      color: white;
+      transform: rotate(90deg);
+    }
+
+    /* Shared Animations */
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 800px) {
+      .header h1 {
+        font-size: 2.3rem;
+      }
+
+      .menu-grid {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .menu-item {
+        width: 100%;
+      }
+
+      .user-floater {
+        position: fixed;
+        bottom: auto;
+        top: 15px;
+        left: 15px;
+        right: 15px;
+        width: calc(100% - 30px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      body {
+        padding-top: 100px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header h1 {
+        font-size: 1.8rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-shape shape-1"></div>
+  <div class="bg-shape shape-2"></div>
+
+  <!-- User Floater Status Bar -->
+  <div id="userFloater" class="user-floater"></div>
+
+  <div class="container">
+    <div class="header">
+      <div class="greeting-box">
+        <span class="greeting-emoji">👋</span>
+        <span id="greetingText">Loading greeting...</span>
+      </div>
+      <h1>Workplace Center</h1>
+      <p>Modernized Management Analytics for Purchase Request Operations</p>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="stats-grid">
+      <div class="stat-card pending">
+        <div class="stat-icon-wrapper">⏳</div>
+        <div>
+          <div id="statPending" class="stat-value">0</div>
+          <div class="stat-name">Pending</div>
+        </div>
+      </div>
+      <div class="stat-card approved">
+        <div class="stat-icon-wrapper">✅</div>
+        <div>
+          <div id="statApproved" class="stat-value">0</div>
+          <div class="stat-name">Approved</div>
+        </div>
+      </div>
+      <div class="stat-card done">
+        <div class="stat-icon-wrapper">📦</div>
+        <div>
+          <div id="statDone" class="stat-value">0</div>
+          <div class="stat-name">Done</div>
+        </div>
+      </div>
+      <div class="stat-card rejected">
+        <div class="stat-icon-wrapper">❌</div>
+        <div>
+          <div id="statRejected" class="stat-value">0</div>
+          <div class="stat-name">Rejected</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <span class="section-icon">🔗</span>
+      <h2>Akses Pekerjaan</h2>
+    </div>
+
+    <!-- Menu Grid -->
+    <div id="menuContainer" class="menu-grid">
+      <!-- Dynamically Rendered -->
+    </div>
+  </div>
+
+  <script>
+    // Configuration
+    const PERMISSIONS = {
+      viewer: ['dashboard.html', 'index.html'],
+      staff_a: ['dashboard.html', 'index.html', 'rekap.html', 'rejected.html'],
+      staff_b: ['dashboard.html', 'index.html', 'approval.html', 'done.html', 'rekap.html'],
+      staff_c: ['dashboard.html', 'index.html', 'approval.html', 'done.html', 'rekap.html', 'rejected.html']
+    };
+
+    const ROLE_NAMES = {
+      viewer: 'Analyst/Viewer',
+      staff_a: 'Office Staff A',
+      staff_b: 'Reviewer Staff B',
+      staff_c: 'Administrator C'
+    };
+
+    const MENU_DEF = [
+      { id: 'request', page: 'index.html', icon: '📝', title: 'New Request', desc: 'Create and submit new purchase requests for items and services.' },
+      { id: 'approval', page: 'approval.html', icon: '🔬', title: 'Approval Hub', desc: 'Central portal to review, approve, or decline pending requests.' },
+      { id: 'done', page: 'done.html', icon: '📦', title: 'Fulfillment', desc: 'Track and finalize procurement steps for approved requests.' },
+      { id: 'rekap', page: 'rekap.html', icon: '📊', title: 'Report Center', desc: 'Comprehensive analytics and history of all transactions.' },
+      { id: 'rejected', page: 'rejected.html', icon: '⛔', title: 'Rejection Log', desc: 'Documented archive of non-fulfillment decisions and reasons.' }
+    ];
+
+    // Core Logic
+    function init() {
+      if (!sessionStorage.getItem('isLoggedIn')) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      setGreeting();
+      renderUserStatus();
+      renderWorkMenu();
+      if (typeof API_URL !== 'undefined') loadDashboardStats();
+    }
+
+    function setGreeting() {
+      const gText = document.getElementById('greetingText');
+      const hour = new Date().getHours();
+      let msg = 'Halo';
+
+      if (hour < 11) msg = 'Selamat Pagi';
+      else if (hour < 15) msg = 'Selamat Siang';
+      else if (hour < 19) msg = 'Selamat Sore';
+      else msg = 'Selamat Malam';
+
+      const user = sessionStorage.getItem('username') || 'Rekan';
+      gText.textContent = `${msg}, ${user}`;
+    }
+
+    function renderUserStatus() {
+      const user = sessionStorage.getItem('username') || 'User';
+      const role = sessionStorage.getItem('userRole') || 'viewer';
+      const roleName = ROLE_NAMES[role] || 'Member';
+      const initial = user.charAt(0).toUpperCase();
+
+      document.getElementById('userFloater').innerHTML = `
+        <div class="user-avatar">${initial}</div>
+        <div class="user-meta">
+          <div class="user-id">${user}</div>
+          <div class="user-tag">${roleName}</div>
+        </div>
+        <button class="nav-logout" onclick="performLogout()" title="Logout System">⏻</button>
+      `;
+    }
+
+    function renderWorkMenu() {
+      const role = sessionStorage.getItem('userRole') || 'viewer';
+      const allowed = PERMISSIONS[role] || [];
+      const container = document.getElementById('menuContainer');
+
+      container.innerHTML = MENU_DEF
+        .filter(m => allowed.includes(m.page))
+        .map(m => `
+          <a href="${m.page}" class="menu-item">
+            <div class="menu-item-icon">${m.icon}</div>
+            <div class="menu-item-info">
+              <h3>${m.title}</h3>
+              <p>${m.desc}</p>
+            </div>
+            <div class="menu-item-arrow">→</div>
+          </a>
+        `).join('');
+    }
+
+    function performLogout() {
+      if (confirm('Selesaikan sesi pekerjaan Anda sekarang?')) {
+        sessionStorage.clear();
+        window.location.href = 'login.html';
+      }
+    }
+
+    // Stats Engine
+    let statsData = { pending: 0, approved: 0, done: 0, rejected: 0 };
+    let seenIds = new Set();
+
+    function loadDashboardStats() {
+      statsData = { pending: 0, approved: 0, done: 0, rejected: 0 };
+      seenIds.clear();
+
+      ['', 'done', 'rejected'].forEach(sName => {
+        const s = document.createElement('script');
+        const url = new URL(API_URL);
+        url.searchParams.set('callback', 'onStatsData');
+        if (sName) url.searchParams.set('sheet', sName);
+        s.src = url.toString();
+        document.body.appendChild(s);
+      });
+    }
+
+    window.onStatsData = (data) => {
+      if (!Array.isArray(data)) return;
+      data.forEach(item => {
+        if (!item.ID || seenIds.has(item.ID)) return;
+        const s = (item.Status || '').toLowerCase();
+        if (statsData.hasOwnProperty(s)) {
+          statsData[s]++;
+          seenIds.add(item.ID);
+        }
+      });
+      syncStatsUI();
+    };
+
+    function syncStatsUI() {
+      document.getElementById('statPending').textContent = statsData.pending;
+      document.getElementById('statApproved').textContent = statsData.approved;
+      document.getElementById('statDone').textContent = statsData.done;
+      document.getElementById('statRejected').textContent = statsData.rejected;
+    }
+
+    // Launch
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+
+</html>
