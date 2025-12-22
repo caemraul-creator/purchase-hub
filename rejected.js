@@ -20,7 +20,8 @@ const DATETIME_COLUMNS = [
   'CreatedAt',
   'SubmissionDate',
   'ApprovedDate',
-  'DoneDate'
+  'DoneDate',
+  'RejectedDate'
 ];
 
 // ======================
@@ -42,17 +43,24 @@ function loadData() {
 
   const s = document.createElement('script');
   s.id = 'jsonp-rejected';
-  s.src = API_URL + '?callback=onRejectedLoaded';
+  // Add timestamp to prevent caching
+  const timestamp = new Date().getTime();
+  s.src = API_URL + '?sheet=rejected&callback=onRejectedLoaded&t=' + timestamp;
   document.body.appendChild(s);
 }
 
 function onRejectedLoaded(data) {
-  // Hanya ambil status === rejected
-  allData = (data || []).filter(d => d.Status === 'rejected');
+  // Use data from 'rejected' sheet directly
+  allData = data || [];
   filteredData = [...allData];
 
-  headers = Object.keys(allData[0] || {})
-    .filter(h => !REJECTED_HIDDEN_COLUMNS.includes(h));
+  if (allData.length > 0) {
+    // Preserve spreadsheet column order
+    headers = Object.keys(allData[0])
+      .filter(h => !REJECTED_HIDDEN_COLUMNS.includes(h));
+  } else {
+    headers = [];
+  }
 
   currentPage = 1;
   renderTable();
@@ -116,7 +124,7 @@ function renderTable() {
         cls = 'text-right';
       }
 
-      if (h === 'Items' || h === 'Description') {
+      if (h === 'Items' || h === 'Description' || h === 'RejectedReason') {
         cls += ' truncate';
       }
 

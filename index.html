@@ -14,30 +14,50 @@
 </head>
 
 <body class="theme-request">
-  <!-- BARIS-1 : judul + (Dashboard + Tambah) -->
-  <div class="head-bar">
-    <h2>Purchase Request List</h2>
-    <div class="head-actions">
-      <a href="dashboard.html" class="btn-secondary btn-link">⬅ Dashboard</a>
-      <button id="btnAdd" class="btn-primary">➕ Tambah Permintaan</button>
+  <!-- BARIS-1 : Modern Header dengan icon dan subtitle -->
+  <div class="head-bar"
+    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div
+        style="width: 48px; height: 48px; background: linear-gradient(135deg, #4f46e5, #6366f1); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">
+        📋
+      </div>
+      <div>
+        <h2 style="margin: 0; font-size: 1.5rem; color: #1f2937;">Purchase Request</h2>
+        <p style="margin: 0; font-size: 0.85rem; color: #6b7280; font-weight: 400;">Daftar permintaan pembelian barang
+        </p>
+      </div>
+    </div>
+    <div class="head-actions" style="display: flex; gap: 12px;">
+      <a href="dashboard.html" class="btn-secondary btn-link"
+        style="text-decoration: none; display: flex; align-items: center; gap: 6px;">
+        ⬅ Dashboard
+      </a>
+      <button id="btnAdd" class="btn-primary" style="display: flex; align-items: center; gap: 8px;">
+        <span style="font-size: 18px;">+</span>
+        Tambah Permintaan
+      </button>
     </div>
   </div>
 
   <!-- BARIS-2 : filter + search -->
-  <div class="filter-bar">
-    <div>
+  <div class="filter-bar"
+    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <div style="display: flex; align-items: center; gap: 8px; color: #6b7280; font-size: 0.9rem;">
       Tampilkan
-      <select id="pageSize">
+      <select id="pageSize"
+        style="padding: 6px 12px; border: 1px solid #d1d5db; border-radius: 6px; background: white; color: #374151; font-size: 0.9rem;">
         <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="25" selected>25</option>
+        <option value="10" selected>10</option>
+        <option value="25">25</option>
         <option value="50">50</option>
       </select>
       data
     </div>
-    <div>
-      Cari:
-      <input type="text" id="search" placeholder="Cari data…">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <span style="color: #6b7280; font-size: 0.9rem;">🔍</span>
+      <input type="text" id="search" placeholder="Cari data..."
+        style="padding: 8px 16px; border: 1px solid #d1d5db; border-radius: 8px; background: #f9fafb; min-width: 250px; font-size: 0.9rem;">
     </div>
   </div>
 

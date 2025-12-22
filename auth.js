@@ -2,6 +2,7 @@
 
 // Role permissions mapping
 const PERMISSIONS = {
+  admin: ['dashboard.html', 'index.html', 'approval.html', 'done.html', 'rekap.html', 'rejected.html'],
   viewer: ['dashboard.html', 'index.html'],
   staff_a: ['dashboard.html', 'index.html', 'rekap.html', 'rejected.html'],
   staff_b: ['dashboard.html', 'index.html', 'approval.html', 'done.html', 'rekap.html'],
@@ -10,11 +11,18 @@ const PERMISSIONS = {
 
 // Role display names
 const ROLE_NAMES = {
-  viewer: 'Viewer',
+  admin: 'Administrator Utama',
+  viewer: 'Viewer / Analyst',
   staff_a: 'Staff Tipe A',
   staff_b: 'Staff Tipe B',
   staff_c: 'Staff Tipe C'
 };
+
+// Helper to normalize role names (e.g., "Staff C" -> "staff_c")
+function normalizeRole(role) {
+  if (!role) return 'viewer';
+  return role.toLowerCase().trim().replace(/ /g, '_');
+}
 
 // Check if user is logged in
 function checkAuth() {
@@ -33,7 +41,8 @@ function checkAuth() {
 function checkPermission() {
   if (!checkAuth()) return;
 
-  const userRole = sessionStorage.getItem('userRole');
+  const rawRole = sessionStorage.getItem('userRole');
+  const userRole = normalizeRole(rawRole);
   const currentPage = window.location.pathname.split('/').pop() || 'dashboard.html';
 
   const allowedPages = PERMISSIONS[userRole] || [];
@@ -49,10 +58,12 @@ function checkPermission() {
 
 // Get current user info
 function getCurrentUser() {
+  const rawRole = sessionStorage.getItem('userRole');
+  const normalizedRole = normalizeRole(rawRole);
   return {
     username: sessionStorage.getItem('username'),
-    role: sessionStorage.getItem('userRole'),
-    roleName: ROLE_NAMES[sessionStorage.getItem('userRole')] || 'Unknown'
+    role: normalizedRole,
+    roleName: ROLE_NAMES[normalizedRole] || (rawRole || 'Unknown')
   };
 }
 
@@ -67,7 +78,8 @@ function logout() {
 }
 
 // Get menu items based on user role
-function getMenuItems(role) {
+function getMenuItems(rawRole) {
+  const role = normalizeRole(rawRole);
   const allMenus = [
     {
       page: 'index.html',

@@ -334,7 +334,8 @@
 
       setLoading(true);
 
-      const roles = ['staff_c', 'staff_b', 'staff_a', 'viewer', 'Staff Tipe C', 'Staff Tipe B', 'Staff Tipe A', 'Viewer', 'Staff C', 'Staff B', 'Staff A', 'staff c', 'staff b', 'staff a', 'admin', 'Admin', 'ADMIN'];
+      // Main categories from spreadsheet
+      const roles = ['staff_c', 'staff_b', 'staff_a', 'viewer', 'admin'];
       let loggedIn = false;
       let lastErrorMessage = '';
 
@@ -407,8 +408,9 @@
     function handleSuccess(response, role) {
       showMessage('✅ Login berhasil! Mengalihkan...', 'success');
 
-      // Save user data to session
-      sessionStorage.setItem('userRole', response.user.role || role);
+      // Save user data to session (normalize role to match auth.js)
+      const storedRole = (response.user.role || role || 'viewer').toLowerCase().trim().replace(/ /g, '_');
+      sessionStorage.setItem('userRole', storedRole);
       sessionStorage.setItem('username', response.user.username);
       sessionStorage.setItem('fullName', response.user.fullName);
       sessionStorage.setItem('isLoggedIn', 'true');
