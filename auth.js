@@ -37,13 +37,16 @@ function checkAuth() {
   return true;
 }
 
+/* ---------- PERBAIKAN ADA DI SINI ---------- */
 // Check if user has permission to access current page
 function checkPermission() {
   if (!checkAuth()) return;
 
   const rawRole = sessionStorage.getItem('userRole');
   const userRole = normalizeRole(rawRole);
-  const currentPage = window.location.pathname.split('/').pop() || 'dashboard.html';
+
+  // Dapatkan nama file halaman saat ini tanpa "/" di depan
+  const currentPage = window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1) || 'dashboard.html';
 
   const allowedPages = PERMISSIONS[userRole] || [];
 
@@ -55,6 +58,7 @@ function checkPermission() {
 
   return true;
 }
+/* ---------- AKHIR PERBAIKAN ---------- */
 
 // Get current user info
 function getCurrentUser() {
