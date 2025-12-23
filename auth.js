@@ -1,4 +1,4 @@
-// auth.js - Authentication & Authorization System
+// auth.js - Authentication & Authorization System + Debug
 
 // Role permissions mapping
 const PERMISSIONS = {
@@ -27,38 +27,38 @@ function normalizeRole(role) {
 // Check if user is logged in
 function checkAuth() {
   const isLoggedIn = sessionStorage.getItem('isLoggedIn');
-
   if (isLoggedIn !== 'true') {
-    // Not logged in, redirect to login
     window.location.href = 'login.html';
     return false;
   }
-
   return true;
 }
 
-/* ---------- PERBAIKAN ADA DI SINI ---------- */
-// Check if user has permission to access current page
+// Check if user has permission to access current page  (VERSI DEBUG)
 function checkPermission() {
   if (!checkAuth()) return;
 
   const rawRole = sessionStorage.getItem('userRole');
   const userRole = normalizeRole(rawRole);
 
-  // Dapatkan nama file halaman saat ini tanpa "/" di depan
   const currentPage = window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1) || 'dashboard.html';
-
   const allowedPages = PERMISSIONS[userRole] || [];
 
+  const debug =
+    `Debug Info
+host     : ${location.host}
+pathname : ${location.pathname}
+page     : ${currentPage}
+userRole : ${userRole}
+allowed  : ${JSON.stringify(allowedPages)}`;
+
   if (!allowedPages.includes(currentPage)) {
-    alert('❌ Anda tidak memiliki akses ke halaman ini!\n\nAnda akan diarahkan ke Dashboard.');
+    alert('❌ Anda tidak memiliki akses ke halaman ini!\n\n' + debug);
     window.location.href = 'dashboard.html';
     return false;
   }
-
   return true;
 }
-/* ---------- AKHIR PERBAIKAN ---------- */
 
 // Get current user info
 function getCurrentUser() {
@@ -74,7 +74,6 @@ function getCurrentUser() {
 // Logout function
 function logout() {
   const confirm = window.confirm('Apakah Anda yakin ingin logout?');
-
   if (confirm) {
     sessionStorage.clear();
     window.location.href = 'login.html';
@@ -85,53 +84,19 @@ function logout() {
 function getMenuItems(rawRole) {
   const role = normalizeRole(rawRole);
   const allMenus = [
-    {
-      page: 'index.html',
-      icon: '📄',
-      title: 'Request',
-      desc: 'Buat & lihat permintaan barang',
-      class: 'request'
-    },
-    {
-      page: 'approval.html',
-      icon: '✅',
-      title: 'Approval',
-      desc: 'Setujui atau tolak permintaan',
-      class: 'approval'
-    },
-    {
-      page: 'done.html',
-      icon: '🛍️',
-      title: 'Done',
-      desc: 'Permintaan yang sudah selesai',
-      class: 'done'
-    },
-    {
-      page: 'rekap.html',
-      icon: '📊',
-      title: 'Rekapan',
-      desc: 'Rekap data permintaan yang sudah DONE',
-      class: 'rekap'
-    },
-    {
-      page: 'rejected.html',
-      icon: '❌',
-      title: 'Rejected',
-      desc: 'Permintaan yang ditolak',
-      class: 'rejected'
-    }
+    { page: 'index.html', icon: '📄', title: 'Request', desc: 'Buat & lihat permintaan barang', class: 'request' },
+    { page: 'approval.html', icon: '✅', title: 'Approval', desc: 'Setujui atau tolak permintaan', class: 'approval' },
+    { page: 'done.html', icon: '🛍️', title: 'Done', desc: 'Permintaan yang sudah selesai', class: 'done' },
+    { page: 'rekap.html', icon: '📊', title: 'Rekapan', desc: 'Rekap data permintaan yang sudah DONE', class: 'rekap' },
+    { page: 'rejected.html', icon: '❌', title: 'Rejected', desc: 'Permintaan yang ditolak', class: 'rejected' }
   ];
-
   const allowedPages = PERMISSIONS[role] || [];
-
   return allMenus.filter(menu => allowedPages.includes(menu.page));
 }
 
 // Add user info to page
 function displayUserInfo() {
   const user = getCurrentUser();
-
-  // Don't show this on dashboard, dashboard has its own floater
   if (window.location.pathname.includes('dashboard.html')) return;
 
   const userInfoDiv = document.createElement('div');
@@ -150,18 +115,12 @@ function displayUserInfo() {
         Logout
       </button>
   `;
-
   document.body.appendChild(userInfoDiv);
 }
 
 // Initialize auth on page load
 document.addEventListener('DOMContentLoaded', function () {
-  // Skip auth check for login page
-  if (window.location.pathname.includes('login.html')) {
-    return;
-  }
-
-  // Check authentication and permission
+  if (window.location.pathname.includes('login.html')) return;
   if (checkPermission()) {
     displayUserInfo();
   }
