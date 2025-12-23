@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <title>Debug Info</title>
+    <style>
+        body {
+            font-family: monospace;
+            background: #f8f9fa;
+            padding: 30px;
+            line-height: 1.6
+        }
+
+        .line {
+            margin: 4px 0
+        }
+
+        .label {
+            font-weight: 700;
+            color: #4f46e5
+        }
+    </style>
+</head>
+
+<body>
+    <div class="line"><span class="label">host:</span> <span id="host"></span></div>
+    <div class="line"><span class="label">pathname:</span> <span id="pathname"></span></div>
+    <div class="line"><span class="label">full href:</span> <span id="href"></span></div>
+    <div class="line"><span class="label">userRole (raw):</span> <span id="role"></span></div>
+    <div class="line"><span class="label">normalized role:</span> <span id="norm"></span></div>
+    <div class="line"><span class="label">allowed pages:</span> <span id="perm"></span></div>
+
+    <script src="auth.js"></script>
+    <script>
+        const r = sessionStorage.getItem('userRole') || '';
+        const n = r.toLowerCase().trim().replace(/ /g, '_');
+        document.getElementById('host').textContent = location.host;
+        document.getElementById('pathname').textContent = location.pathname;
+        document.getElementById('href').textContent = location.href;
+        document.getElementById('role').textContent = r;
+        document.getElementById('norm').textContent = n;
+        document.getElementById('perm').textContent = JSON.stringify(PERMISSIONS[n] || []);
+    </script>
+</body>
+
+</html>
